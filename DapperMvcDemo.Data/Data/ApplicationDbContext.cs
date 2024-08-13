@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace DapperMvcDemo.Data.Data
 {
-    internal class ApplicationDbContext
+    public class ApplicationDbContext: IApplicationDbContext
     {
         private readonly IConfiguration _config;
 
