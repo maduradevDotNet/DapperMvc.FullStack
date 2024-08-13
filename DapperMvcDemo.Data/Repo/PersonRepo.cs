@@ -12,7 +12,6 @@ namespace DapperMvcDemo.Data.Repo
         {
             _db=db;
         }
-
         public async Task<bool> AddAsync(Person person)
         {
             try
@@ -26,8 +25,6 @@ namespace DapperMvcDemo.Data.Repo
 
             }
         }
-
-
         public async Task<bool> UpdateAsync(Person person)
         {
             try
@@ -42,6 +39,34 @@ namespace DapperMvcDemo.Data.Repo
 
             }
         }
+        public async Task<bool> DeleteAsync(int id)
+        {
+            try
+            {
+                await _db.SaveData("sp_delete_person", new {Id=id});
+                return true;
+            }
+
+            catch (Exception ex)
+            {
+                return false;
+
+            }
+        }
+
+        public async Task<Person?> GetByIdAsync(int id)
+        {
+            IEnumerable<Person> result=await _db.getData<Person,dynamic>("sp_get_person", new {Id=id});
+            return result.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<Person>> GetAllAsync()
+        {
+            string query = "sp_get_people";
+            return await _db.getData<Person, dynamic>(query, new {});
+            
+        }
+
 
 
     }
